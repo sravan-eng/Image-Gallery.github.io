@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Image Gallery</title>
+  <!--<meta charset="utf-8">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    .preview-image {
+      height: 200px;
+      width: 100%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background: #000;
+      -webkit-box-shadow: 2px 0px 30px 0px rgba(255, 255, 255, 0.58);
+-moz-box-shadow:    2px 0px 30px 0px rgba(255, 255, 255, 0.58);
+box-shadow:         2px 0px 30px 0px rgba(255, 255, 255, 0.58);
+transition: transform .6s; 
+    }
+    .preview-image:hover{
+      transform: scale(1.2);
+    }
+
+    .custom-file-upload {
+      width: 100px;
+      text-align: center;
+      margin-left: 46.8%;
+      margin-top: 100px;
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: #000;
+      color: #fff;
+      border-radius: 10px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    #paragraph {
+      font-size: 30px;
+      line-height: 50px;
+      background: #000;
+    }
+
+    body {
+      font-family: Verdana;
+      background-color: #111;
+    }
+
+    .columnu {
+      float: left;
+      width: 31%;
+      color: rgb(1, 255, 255);
+      background-color: black;
+      margin-top: 7px;
+      margin-left: 10px;
+      border-radius: 10px;
+      margin-bottom: 4rem;
+      margin-right: 1.5rem;
+    }
+
+    .rowu {
+      width: 80%;
+      margin: auto;
+      text-align: center;
+    }
+
+    /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 500px) {
+      .columnu {
+        width: 100%;
+      }
+    }
+  </style>
+
+</head>
+
+<body style="background-color:#111">
+
+  <div
+    style="background-color: #000;color: white;text-align: center;border-bottom-left-radius: 10px; width:100%; position:fixed; bottom:73.9rem; border-bottom-right-radius: 10px;">
+    <p id="paragraph" style="background: #000;">Gallery</p>
+  </div>
+
+<!--<form id="form" action="http://localhost:5000/upload" enctype="multipart/form-data" method="POST">
+<input type="file" name="file" id="file" />
+<input type="Submit" value="Upload" />
+</form>-->
+
+  <form id="form" action="http://127.0.0.1:5000/upload" enctype="multipart/form-data" method="POST">
+               
+
+    <label class="custom-file-upload">
+      <input type="file" name="file" id="file" class="btn btn-primary" onchange="document.getElementById('upload').click()" />
+      Upload
+    </label>
+
+    <input id="upload" type="Submit" value="Upload" style="display: none;" />
+
+  </form>
+  <!--<form id="form" action="http://127.0.0.1:5000/upload" enctype="multipart/form-data" method="POST">
+    <label class="custom-file-upload">
+      <input type="text" class="btn btn-primary">
+      <input type="file" name="file" id="file" class="btn btn-primary" onchange="document.getElementById('upload').click()">
+    </label>
+  </form>-->
+  <br><br>
+  <div class="rowu">
+    {% for upload in uploads %}             <!--          This is the jinja2 tempate for writing any kind of loops or conditionals          -->
+    {% if ('png' in upload) or ('jpg' in upload) or ('jpeg' in upload) %}   <!--          Display only the jpg,png,jpeg file formats          -->
+    <div class="columnu">
+      <img class="preview-image" src="{{url_for('static', filename=upload)}}" alt="{{upload}}"><br>
+      {% print(upload.split("/")[1][:20]) %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  <div
+    style="   position: fixed;left: 0;bottom: 0;width: 100%;background-color:#000;color: white;text-align: center;">
+    Image Gallery - 2021
+  </div>
+
+</body>
+
+</html>

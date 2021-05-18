@@ -1,0 +1,6 @@
+flask
+Flask-SQLAlchemy
+Werkzeug
+requests
+os-sys
+regex
